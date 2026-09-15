@@ -4,72 +4,161 @@ import './App.css'
 function App() {
   const [time, setTime] = useState(new Date())
   const [active, setActive] = useState('DASHBOARD')
+  const [typedText, setTypedText] = useState('')
+
+  const fullText =
+    'I build secure, scalable and intelligent software systems.'
 
   useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 1000)
+    const timer = setInterval(() => {
+      setTime(new Date())
+    }, 1000)
+
     return () => clearInterval(timer)
+  }, [])
+
+  // Typing animation
+  useEffect(() => {
+    let index = 0
+
+    const typing = setInterval(() => {
+      setTypedText(fullText.slice(0, index))
+      index++
+
+      if (index > fullText.length) {
+        clearInterval(typing)
+      }
+    }, 45)
+
+    return () => clearInterval(typing)
   }, [])
 
   const menuItems = [
     'DASHBOARD',
-    'NETWORK',
-    'SYSTEM',
-    'DATABASE',
+    'PROJECTS',
+    'STACK',
+    'ABOUT',
     'TERMINAL',
   ]
+
+  const projects = [
+    {
+      name: 'SmartSlot',
+      type: 'Java Desktop Application',
+      description:
+        'A smart timetable conflict resolution system designed for academic scheduling.',
+      tech: ['Java', 'JavaFX', 'MongoDB', 'Maven'],
+      status: 'ACTIVE',
+    },
+    {
+      name: 'WealthCorePro',
+      type: 'Full-Stack Finance Platform',
+      description:
+        'Personal finance and investment platform with authentication, analytics and portfolio management.',
+      tech: ['React', 'Node.js', 'MongoDB', 'JWT'],
+      status: 'DEVELOPING',
+    },
+    {
+      name: 'Personal Finance Tracker',
+      type: 'Backend API',
+      description:
+        'Secure financial management API with authentication, transactions and structured REST endpoints.',
+      tech: ['Java', 'Spring Boot', 'JPA', 'JWT'],
+      status: 'COMPLETED',
+    },
+  ]
+
+  const skills = [
+    ['Java / Spring Boot', 88],
+    ['Python / Flask', 82],
+    ['JavaScript / React', 80],
+    ['Node.js / REST APIs', 84],
+    ['MongoDB / SQL', 78],
+    ['Git / GitHub', 86],
+  ]
+
+  const navigate = (item) => {
+    setActive(item)
+
+    setTimeout(() => {
+      document
+        .getElementById(item.toLowerCase())
+        ?.scrollIntoView({ behavior: 'smooth' })
+    }, 50)
+  }
 
   return (
     <div className="app">
 
-      {/* Animated background */}
+      {/* Background effects */}
       <div className="grid"></div>
       <div className="scanline"></div>
       <div className="noise"></div>
 
-      {/* Sidebar */}
+      {/* Floating particles */}
+      <div className="particles">
+        {[...Array(25)].map((_, i) => (
+          <span key={i}></span>
+        ))}
+      </div>
+
+      {/* SIDEBAR */}
       <aside className="sidebar">
 
         <div className="brand">
+
           <div className="brand-symbol">
             K
           </div>
 
           <div>
             <h1>KALCULUS</h1>
-            <span>CYBER SYSTEM</span>
+            <span>SOFTWARE ENGINEER</span>
           </div>
+
         </div>
 
+        {/* Profile */}
         <div className="profile">
+
           <div className="avatar">
             <span>K</span>
           </div>
 
-          <div>
-            <strong>KALCULUS</strong>
-            <small>ROOT ACCESS</small>
+          <div className="profile-info">
+            <strong>KALCULUS JNR</strong>
+            <small>DEVELOPER ACCESS</small>
           </div>
 
           <div className="online"></div>
+
         </div>
 
+        {/* Navigation */}
         <nav>
-          <p className="nav-title">MAIN SYSTEM</p>
+
+          <p className="nav-title">
+            PORTFOLIO
+          </p>
 
           {menuItems.map((item) => (
+
             <button
               key={item}
               className={`nav-button ${
                 active === item ? 'active' : ''
               }`}
-              onClick={() => setActive(item)}
+              onClick={() => navigate(item)}
             >
+
               <span className="nav-icon">
+
                 {item === 'DASHBOARD' && '⌂'}
-                {item === 'NETWORK' && '◈'}
-                {item === 'SYSTEM' && '◉'}
-                {item === 'DATABASE' && '▣'}
+                {item === 'PROJECTS' && '◈'}
+                {item === 'STACK' && '◇'}
+                {item === 'ABOUT' && '◎'}
                 {item === 'TERMINAL' && '>_'}
+
               </span>
 
               {item}
@@ -77,200 +166,607 @@ function App() {
               {active === item && (
                 <span className="active-line"></span>
               )}
+
             </button>
+
           ))}
+
         </nav>
 
+        {/* Bottom */}
         <div className="sidebar-bottom">
+
           <div className="security-status">
+
             <span className="pulse"></span>
+
             <div>
-              <small>SECURITY</small>
-              <strong>ENCRYPTED</strong>
+              <small>AVAILABILITY</small>
+              <strong>OPEN TO WORK</strong>
             </div>
+
           </div>
 
           <div className="version">
-            KALCULUS OS v1.0.26
+            KALCULUS.DEV // v2.0
           </div>
+
         </div>
+
       </aside>
 
-      {/* Main content */}
+
+      {/* MAIN */}
       <main className="main">
 
-        {/* Top bar */}
+        {/* TOP BAR */}
         <header className="topbar">
+
           <div>
+
             <div className="breadcrumb">
-              SYSTEM / {active}
+              PORTFOLIO / {active}
             </div>
 
             <h2>
               {active === 'DASHBOARD'
-                ? 'WELCOME BACK, KALCULUS'
+                ? 'WELCOME TO MY DIGITAL SPACE'
                 : active}
             </h2>
+
           </div>
 
           <div className="clock">
+
             <span className="clock-dot"></span>
+
             {time.toLocaleTimeString()}
+
           </div>
+
         </header>
 
-        {/* Hero */}
-        <section className="hero">
+
+        {/* HERO */}
+        <section
+          className="hero"
+          id="dashboard"
+        >
 
           <div className="hero-content">
+
             <div className="terminal-tag">
-              <span>●</span> SYSTEM ONLINE
+
+              <span>●</span>
+
+              SOFTWARE ENGINEER // ONLINE
+
             </div>
 
             <h1>
-              KALCULUS
-              <span> // CYBER COMMAND</span>
+
+              ANDREWS
+              <span> OSEI BONSU</span>
+
             </h1>
 
-            <p>
-              Welcome to the private command interface.
-              Monitor systems, analyze networks and control
-              your digital environment.
+            <div className="role">
+
+              <span>&gt;</span>
+
+              SOFTWARE ENGINEER
+              <span className="cursor">_</span>
+
+            </div>
+
+            <p className="hero-description">
+
+              {typedText}
+
+            </p>
+
+            <p className="hero-subtext">
+
+              Backend Development • Full-Stack Engineering •
+              AI • Data Security
+
             </p>
 
             <div className="hero-buttons">
-              <button className="primary-button">
-                <span>INITIALIZE SYSTEM</span>
+
+              <button
+                className="primary-button"
+                onClick={() => navigate('PROJECTS')}
+              >
+
+                <span>EXPLORE MY WORK</span>
+
                 <b>→</b>
+
               </button>
 
-              <button className="secondary-button">
-                VIEW LOGS
-              </button>
+              <a
+                className="secondary-button"
+                href="https://github.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GITHUB
+              </a>
+
             </div>
+
           </div>
 
+
+          {/* ORBIT */}
           <div className="orb">
+
             <div className="orb-ring ring-one"></div>
+
             <div className="orb-ring ring-two"></div>
+
             <div className="orb-ring ring-three"></div>
 
             <div className="orb-core">
-              K
+
+              <span>K</span>
+
+              <small>DEV</small>
+
             </div>
+
           </div>
 
         </section>
 
-        {/* Stats */}
+
+        {/* STATS */}
         <section className="stats">
 
           <div className="stat-card">
+
             <div className="stat-header">
-              <span>SYSTEM STATUS</span>
-              <i>◉</i>
-            </div>
-
-            <strong>ONLINE</strong>
-
-            <div className="progress">
-              <span style={{ width: '94%' }}></span>
-            </div>
-
-            <small>94% operational capacity</small>
-          </div>
-
-          <div className="stat-card">
-            <div className="stat-header">
-              <span>NETWORK</span>
+              <span>PROJECTS</span>
               <i>◈</i>
             </div>
 
-            <strong>SECURE</strong>
+            <strong>03+</strong>
 
             <div className="progress">
-              <span style={{ width: '87%' }}></span>
+              <span style={{ width: '82%' }}></span>
             </div>
 
-            <small>Encrypted connection</small>
+            <small>Real-world applications</small>
+
           </div>
 
+
           <div className="stat-card">
+
             <div className="stat-header">
-              <span>DATABASE</span>
-              <i>▣</i>
+              <span>BACKEND</span>
+              <i>⌘</i>
+            </div>
+
+            <strong>84%</strong>
+
+            <div className="progress">
+              <span style={{ width: '84%' }}></span>
+            </div>
+
+            <small>APIs & server architecture</small>
+
+          </div>
+
+
+          <div className="stat-card">
+
+            <div className="stat-header">
+              <span>FULL STACK</span>
+              <i>◇</i>
+            </div>
+
+            <strong>80%</strong>
+
+            <div className="progress">
+              <span style={{ width: '80%' }}></span>
+            </div>
+
+            <small>Frontend + backend</small>
+
+          </div>
+
+
+          <div className="stat-card">
+
+            <div className="stat-header">
+              <span>SECURITY</span>
+              <i>◆</i>
             </div>
 
             <strong>ACTIVE</strong>
 
             <div className="progress">
-              <span style={{ width: '76%' }}></span>
+              <span style={{ width: '91%' }}></span>
             </div>
 
-            <small>Database synchronization</small>
-          </div>
+            <small>Secure development mindset</small>
 
-          <div className="stat-card">
-            <div className="stat-header">
-              <span>FIREWALL</span>
-              <i>◆</i>
-            </div>
-
-            <strong>PROTECTED</strong>
-
-            <div className="progress">
-              <span style={{ width: '99%' }}></span>
-            </div>
-
-            <small>Threat protection enabled</small>
           </div>
 
         </section>
 
-        {/* Dashboard grid */}
-        <section className="dashboard-grid">
 
-          {/* Terminal */}
-          <div className="panel terminal">
+        {/* PROJECTS */}
+        <section
+          className="section"
+          id="projects"
+        >
 
-            <div className="panel-header">
-              <div>
-                <span className="mini-dot"></span>
-                TERMINAL
-              </div>
+          <div className="section-heading">
 
-              <span>LIVE</span>
+            <div>
+              <span className="section-label">
+                01 // SELECTED WORK
+              </span>
+
+              <h2>
+                PROJECT <span>DATABASE</span>
+              </h2>
             </div>
 
-            <div className="terminal-body">
+            <span className="section-status">
+              LIVE PROJECTS
+            </span>
+
+          </div>
+
+
+          <div className="projects-grid">
+
+            {projects.map((project, index) => (
+
+              <article
+                className="project-card"
+                key={project.name}
+                style={{
+                  animationDelay: `${index * 150}ms`,
+                }}
+              >
+
+                <div className="project-number">
+                  0{index + 1}
+                </div>
+
+                <div className="project-top">
+
+                  <span className="project-type">
+                    {project.type}
+                  </span>
+
+                  <span className="project-status">
+                    ● {project.status}
+                  </span>
+
+                </div>
+
+                <h3>
+                  {project.name}
+                </h3>
+
+                <p>
+                  {project.description}
+                </p>
+
+                <div className="tech-list">
+
+                  {project.tech.map((tech) => (
+                    <span key={tech}>
+                      {tech}
+                    </span>
+                  ))}
+
+                </div>
+
+                <button className="project-link">
+                  VIEW PROJECT →
+                </button>
+
+              </article>
+
+            ))}
+
+          </div>
+
+        </section>
+
+
+        {/* STACK */}
+        <section
+          className="section"
+          id="stack"
+        >
+
+          <div className="section-heading">
+
+            <div>
+
+              <span className="section-label">
+                02 // TECHNOLOGY
+              </span>
+
+              <h2>
+                ENGINEERING <span>STACK</span>
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div className="stack-layout">
+
+            <div className="skills-panel">
+
+              {skills.map(([skill, percentage]) => (
+
+                <div
+                  className="skill"
+                  key={skill}
+                >
+
+                  <div className="skill-info">
+
+                    <span>{skill}</span>
+
+                    <strong>
+                      {percentage}%
+                    </strong>
+
+                  </div>
+
+                  <div className="skill-bar">
+
+                    <span
+                      style={{
+                        width: `${percentage}%`,
+                      }}
+                    ></span>
+
+                  </div>
+
+                </div>
+
+              ))}
+
+            </div>
+
+
+            <div className="tech-cloud">
+
+              <div className="tech-icon java">
+                JAVA
+              </div>
+
+              <div className="tech-icon react">
+                REACT
+              </div>
+
+              <div className="tech-icon python">
+                PYTHON
+              </div>
+
+              <div className="tech-icon node">
+                NODE
+              </div>
+
+              <div className="tech-icon mongo">
+                MONGO
+              </div>
+
+              <div className="tech-icon spring">
+                SPRING
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        {/* ABOUT */}
+        <section
+          className="section about-section"
+          id="about"
+        >
+
+          <div className="section-heading">
+
+            <div>
+
+              <span className="section-label">
+                03 // IDENTITY
+              </span>
+
+              <h2>
+                ABOUT <span>ME</span>
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div className="about-grid">
+
+            <div className="about-card">
+
+              <div className="about-icon">
+                &lt;/&gt;
+              </div>
+
+              <h3>
+                SOFTWARE ENGINEER
+              </h3>
 
               <p>
-                <span className="green">kalculus@system</span>
-                :~$ initialize
+                I enjoy transforming ideas into functional
+                software systems. My focus is on writing clean,
+                maintainable and scalable code.
               </p>
 
-              <p className="dim">
-                Loading KALCULUS core...
+            </div>
+
+
+            <div className="about-card">
+
+              <div className="about-icon">
+                API
+              </div>
+
+              <h3>
+                BACKEND ENGINEERING
+              </h3>
+
+              <p>
+                I work with REST APIs, authentication,
+                databases and server-side architecture to
+                build reliable applications.
               </p>
 
-              <p className="dim">
-                Checking system integrity...
+            </div>
+
+
+            <div className="about-card">
+
+              <div className="about-icon">
+                AI
+              </div>
+
+              <h3>
+                AI & DATA
+              </h3>
+
+              <p>
+                I'm exploring the intersection between
+                software engineering, artificial intelligence
+                and data-driven systems.
               </p>
 
-              <p className="success">
-                [OK] SYSTEM INTEGRITY VERIFIED
+            </div>
+
+
+            <div className="about-card">
+
+              <div className="about-icon">
+                🔐
+              </div>
+
+              <h3>
+                SECURITY
+              </h3>
+
+              <p>
+                Security is part of my engineering mindset,
+                from authentication and authorization to
+                protecting application data.
               </p>
 
-              <p className="success">
-                [OK] NETWORK ENCRYPTION ACTIVE
+            </div>
+
+          </div>
+
+        </section>
+
+
+        {/* TERMINAL */}
+        <section
+          className="section"
+          id="terminal"
+        >
+
+          <div className="terminal-window">
+
+            <div className="terminal-header">
+
+              <div className="terminal-controls">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <span>
+                kalculus@portfolio:~
+              </span>
+
+              <span>
+                bash
+              </span>
+
+            </div>
+
+
+            <div className="terminal-content">
+
+              <p>
+                <span className="green">
+                  kalculus@portfolio
+                </span>
+                :~$ whoami
               </p>
 
-              <p className="success">
-                [OK] FIREWALL PROTECTION ACTIVE
+              <p className="terminal-output">
+                Andrews Osei Bonsu
               </p>
 
               <p>
-                <span className="green">kalculus@system</span>
+                <span className="green">
+                  kalculus@portfolio
+                </span>
+                :~$ role
+              </p>
+
+              <p className="terminal-output">
+                Software Engineer / Backend Developer
+              </p>
+
+              <p>
+                <span className="green">
+                  kalculus@portfolio
+                </span>
+                :~$ mission
+              </p>
+
+              <p className="terminal-output">
+                Build useful software. Learn continuously.
+                Solve real problems.
+              </p>
+
+              <p>
+                <span className="green">
+                  kalculus@portfolio
+                </span>
+                :~$ status
+              </p>
+
+              <p className="success">
+                [OK] SYSTEM ONLINE
+              </p>
+
+              <p className="success">
+                [OK] DEVELOPER MODE ACTIVE
+              </p>
+
+              <p className="success">
+                [OK] READY TO BUILD
+              </p>
+
+              <p>
+                <span className="green">
+                  kalculus@portfolio
+                </span>
                 :~$ <span className="cursor">_</span>
               </p>
 
@@ -278,70 +774,65 @@ function App() {
 
           </div>
 
-          {/* Activity */}
-          <div className="panel activity">
+        </section>
 
-            <div className="panel-header">
-              <div>
-                <span className="mini-dot"></span>
-                SYSTEM ACTIVITY
-              </div>
 
-              <span>REAL TIME</span>
-            </div>
+        {/* CONTACT */}
+        <section className="contact">
 
-            <div className="activity-list">
+          <span className="section-label">
+            04 // CONNECTION
+          </span>
 
-              <div>
-                <span className="activity-icon">✓</span>
-                <p>
-                  System initialized
-                  <small>Just now</small>
-                </p>
-              </div>
+          <h2>
+            LET'S BUILD
+            <span> SOMETHING GREAT.</span>
+          </h2>
 
-              <div>
-                <span className="activity-icon">↗</span>
-                <p>
-                  Secure connection established
-                  <small>2 min ago</small>
-                </p>
-              </div>
+          <p>
+            Have a project, idea or opportunity?
+            Let's connect and build something meaningful.
+          </p>
 
-              <div>
-                <span className="activity-icon">◆</span>
-                <p>
-                  Firewall scan completed
-                  <small>5 min ago</small>
-                </p>
-              </div>
+          <div className="contact-buttons">
 
-              <div>
-                <span className="activity-icon">◈</span>
-                <p>
-                  Database synchronized
-                  <small>8 min ago</small>
-                </p>
-              </div>
+            <a
+              href="mailto:your-email@example.com"
+              className="primary-button"
+            >
+              CONTACT ME →
+            </a>
 
-            </div>
+            <a
+              href="https://github.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="secondary-button"
+            >
+              GITHUB
+            </a>
 
           </div>
 
         </section>
 
-        {/* Bottom */}
+
+        {/* FOOTER */}
         <footer>
+
           <span>
-            KALCULUS // PRIVATE CYBER INTERFACE
+            KALCULUS.DEV // SOFTWARE ENGINEER
           </span>
 
           <span>
-            SYSTEM STATUS: <b>STABLE</b>
+            SYSTEM STATUS:
+            <b> ONLINE</b>
           </span>
+
         </footer>
 
       </main>
+
     </div>
   )
 }
