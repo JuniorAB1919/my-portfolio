@@ -797,14 +797,14 @@ function App() {
           <div className="contact-buttons">
 
             <a
-              href="mailto:your-email@example.com"
+              href="mailto:bonsuandrewsosei1919@gmail.com"
               className="primary-button"
             >
               CONTACT ME →
             </a>
 
             <a
-              href="https://github.com/"
+              href="https://github.com/JuniorAB1919?tab=repositories"
               target="_blank"
               rel="noreferrer"
               className="secondary-button"
